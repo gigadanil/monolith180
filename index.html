@@ -89,6 +89,91 @@
         }
         
         /* ============= ЭКРАН ПРИВЕТСТВИЯ ============= */
+
+        /* --- YM3 кастомный маркер пользователя --- */
+        .user-marker,
+        .ym3-user-marker {
+            position: absolute;
+            width: 36px !important;
+            height: 36px !important;
+            pointer-events: none;
+            z-index: 1000;
+            will-change: transform;
+            transform-origin: 50% 50%;
+            transform-box: fill-box;
+            transform: translate(-50%, -50%) !important;
+            contain: layout;
+        }
+        .ym3-user-arrow {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 22px;
+            height: 30px;
+            transform: translate(-50%, -50%) rotate(0deg);
+            transform-origin: 50% 74%;
+            filter: drop-shadow(0px 4px 2px rgba(0,0,0,0.4));
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+        .ym3-user-arrow::before,
+        .ym3-user-arrow::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 0;
+        }
+        .ym3-user-arrow::before {
+            background: linear-gradient(180deg, #fff2a4 0%, #ffd94a 58%, #f4be25 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 50% 83%);
+        }
+        .ym3-user-arrow::after {
+            background: linear-gradient(180deg, #f5c33a 0%, #e2a507 60%, #b37a00 100%);
+            clip-path: polygon(50% 0%, 100% 100%, 50% 83%);
+        }
+        .ym3-user-halo {
+            position: absolute;
+            left: 50%;
+            top: 57%;
+            width: 26px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(255,215,0,0.42) 0%, rgba(255,215,0,0.16) 48%, rgba(255,215,0,0) 100%);
+            filter: blur(3.5px);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .ym3-user-pulse {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 215, 0, 0.36);
+            background: transparent;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: ym3UserPulse 1.35s ease-out infinite;
+            z-index: 1;
+        }
+        @keyframes ym3UserPulse {
+            0% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1);
+                border-color: rgba(255, 215, 0, 0.55);
+            }
+            70% {
+                opacity: 0.2;
+                transform: translate(-50%, -50%) scale(2.25);
+                border-color: rgba(255, 215, 0, 0.2);
+            }
+            100% {
+                opacity: 0.0;
+                transform: translate(-50%, -50%) scale(2.7);
+                border-color: rgba(255, 215, 0, 0.0);
+            }
+        }
         #splashScreen {
             position: fixed;
             top: 0;
@@ -188,6 +273,78 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* ============= MONOLITH RELEASE WAIT SCREEN ============= */
+        .release-wait-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100120;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: calc(24px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));
+            background:
+                radial-gradient(1200px 700px at 20% 10%, rgba(255,215,0,0.10) 0%, rgba(0,0,0,0) 60%),
+                repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 2px, rgba(0,0,0,0) 2px 8px),
+                #050505;
+            font-family: 'Montserrat', 'Roboto', system-ui, -apple-system, sans-serif;
+        }
+        .release-wait-card {
+            width: min(92vw, 520px);
+            background: rgba(10, 10, 10, 0.92);
+            border: 1px solid rgba(255, 215, 0, 0.28);
+            border-radius: 20px;
+            box-shadow: 0 18px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.04);
+            padding: 24px 18px;
+            text-align: center;
+            color: #fff;
+        }
+        .release-logo {
+            margin: 0 auto 14px;
+            font-size: clamp(34px, 8vw, 46px);
+            letter-spacing: 0.08em;
+            font-weight: 800;
+            color: #FFD700;
+            text-shadow: 0 0 14px rgba(255,215,0,0.35);
+            animation: monolithGlowPulse 2.3s ease-in-out infinite;
+        }
+        .release-title {
+            margin: 0 0 10px;
+            font-size: clamp(15px, 3.8vw, 18px);
+            color: rgba(255,255,255,0.92);
+            font-weight: 700;
+        }
+        .release-countdown {
+            margin: 0 auto 14px;
+            padding: 12px 10px;
+            border-radius: 12px;
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.28);
+            color: #FFD700;
+            font-size: clamp(18px, 5vw, 24px);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+        }
+        .release-subtitle {
+            margin: 0 0 10px;
+            color: rgba(255,255,255,0.78);
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .release-changelog {
+            margin: 0;
+            padding: 0 0 0 16px;
+            text-align: left;
+            color: rgba(255,255,255,0.9);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+        .release-changelog li { margin-bottom: 6px; }
+
+        @keyframes monolithGlowPulse {
+            0%, 100% { text-shadow: 0 0 12px rgba(255,215,0,0.28); transform: scale(1); }
+            50% { text-shadow: 0 0 24px rgba(255,215,0,0.45); transform: scale(1.035); }
+        }
         
         /* ============= УВЕДОМЛЕНИЕ О БАНЕ ============= */
         .ban-notice { 
@@ -279,32 +436,36 @@
             transform: translate(-50%, -50%);
             z-index: 9999;
             pointer-events: none;
-            width: 30px;
-            height: 30px;
+            width: 22px;
+            height: 22px;
             transition: visibility 0.2s, opacity 0.2s;
             visibility: visible;
             opacity: 1;
         }
+        .target.target-autofollow-hidden {
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
         .target::before {
             content: '';
             position: absolute;
-            inset: 0;
+            inset: 2px;
             border-radius: 50%;
-            border: 2px solid var(--blue);
-            background: rgba(255,255,255,0.92);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+            border: 2px solid rgba(255,255,255,0.95);
+            background: rgba(0, 122, 255, 0.62);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.22);
         }
         .target::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 8px;
-            height: 8px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
-            background: #ff3b30;
+            background: rgba(255,255,255,0.96);
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 0 2px rgba(255,255,255,0.95);
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.10);
         }
         .bottom-ui, .action-panel {
             position: fixed;
@@ -546,6 +707,78 @@
             100% { box-shadow: 0 0 0 0 rgba(57,255,20,0.0); }
         }
 
+        .hide-ui {
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        .driving-hud {
+            position: fixed;
+            inset: 0;
+            z-index: 2100;
+            pointer-events: none;
+        }
+        #speed-val {
+            position: fixed;
+            top: calc(10px + var(--safe-area-inset-top));
+            left: calc(12px + var(--safe-area-inset-left));
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-shadow: var(--critical-outline);
+            line-height: 1;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        #online-count {
+            position: fixed;
+            top: calc(12px + var(--safe-area-inset-top));
+            right: calc(12px + var(--safe-area-inset-right));
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 12px;
+            background: var(--card-strong);
+            border: 1px solid var(--stroke);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        #dps-alert {
+            position: fixed;
+            top: calc(12px + var(--safe-area-inset-top));
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 7px 12px;
+            border-radius: 12px;
+            background: var(--card-strong);
+            border: 1px solid var(--stroke);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 900;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        #dps-alert.is-danger {
+            background: #ff3b30;
+            border-color: #ff3b30;
+            color: #fff;
+            animation: dpsAlertBlink 0.9s steps(2, start) infinite;
+        }
+        @keyframes dpsAlertBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.45; }
+        }
+        body.driving-mode #speed-val,
+        body.driving-mode #online-count,
+        body.driving-mode #dps-alert {
+            opacity: 1;
+        }
+
         .user-marker-wrap { position: relative; width: 100%; height: 100%; pointer-events: none; }
         .user-pulse {
             position: absolute;
@@ -583,6 +816,22 @@
             opacity: 0;
             transform: translateX(100px);
             pointer-events: none;
+        }
+
+        body.autofollow-ui-hidden #onlineCountBadge,
+        body.autofollow-ui-hidden #mapEngineBadge,
+        body.autofollow-ui-hidden #map3dToggleFloating,
+        body.autofollow-ui-hidden #rightBar,
+        body.autofollow-ui-hidden #bottomControls,
+        body.autofollow-ui-hidden .action-panel,
+        body.autofollow-ui-hidden #openActionBtn,
+        body.autofollow-ui-hidden .speedometer,
+        body.autofollow-ui-hidden #speedometerOpenBtn,
+        body.autofollow-ui-hidden #inAppNotifWrap,
+        body.autofollow-ui-hidden .broadcast-banner,
+        body.autofollow-ui-hidden .proximity-banner,
+        body.autofollow-ui-hidden .crowd-confirm {
+            display: none !important;
         }
 
         .right-bar .action-btn {
@@ -670,7 +919,10 @@
         }
 
         /* Прячем старые плавающие элементы, чтобы интерфейс соответствовал ТЗ */
-        .top-controls, .fab-stack, .follow-toggle, .feedback-btn { display: none !important; }
+        .top-controls, .feedback-btn { display: none !important; }
+        .fab-stack, .follow-toggle { display: none !important; }
+        body.engine-v3 .fab-stack { display: flex !important; }
+        body.engine-v3 .follow-toggle { display: flex !important; }
         .fab-row {
             display: flex;
             gap: 10px;
@@ -1310,6 +1562,20 @@
     </style>
 </head>
 <body>
+    <div id="releaseWaitScreen" class="release-wait-screen" aria-live="polite">
+        <div class="release-wait-card">
+            <div class="release-logo">MONOLITH</div>
+            <p class="release-title">Запуск обновления уже близко</p>
+            <div class="release-countdown" id="releaseCountdown">--:--:--</div>
+            <p class="release-subtitle">До 1 марта 12:00 осталось:</p>
+            <ul class="release-changelog">
+                <li>Стабильный 2D-режим карты без 3D-ошибок</li>
+                <li>Обновлённый маркер местоположения и плавное перемещение</li>
+                <li>Оптимизация интерфейса под слабые смартфоны</li>
+            </ul>
+        </div>
+    </div>
+
     <!-- ============= ЭКРАН ПРИВЕТСТВИЯ ============= -->
     <div id="splashScreen">
         <img src="img/logo.png" alt="180 СафеДрайв" class="splash-logo">
@@ -1416,6 +1682,11 @@
         <span class="online-dot" aria-hidden="true"></span>
         <span id="onlineCountText">В сети: —</span>
     </div>
+    <div id="drivingHud" class="driving-hud" aria-hidden="true">
+        <div id="speed-val">0</div>
+        <div id="online-count">👤 <span id="online-count-val">—</span></div>
+        <div id="dps-alert">👮 ДПС: —</div>
+    </div>
     <div id="mapEngineBadge" class="engine-badge" aria-label="Движок карты">🗺️ ymaps3</div>
     <button id="map3dToggleFloating" onclick="toggleMap3dFromUI()" title="Переключить 2D/3D" aria-label="Переключить 2D/3D">3D OFF</button>
     <div id="map"></div>
@@ -1427,7 +1698,7 @@
         <button class="action-btn" id="ccSettingsBtn" onclick="openAdminModal()" title="Настройки" aria-label="Настройки">⚙️</button>
         <button class="action-btn" id="ccMapEngineBtn" onclick="toggleMapEngineFromUI()" title="Тест движка карты" aria-label="Тест движка карты">🗺️</button>
         <button class="action-btn" id="ccLayersBtn" onclick="toggleMainLayers()" title="Слои" aria-label="Слои">🗂️</button>
-        <button class="action-btn" id="ccCourseBtn" onclick="toggleDynamicCourseFromUI()" title="Динамический курс" aria-label="Динамический курс">🧭</button>
+        <button class="action-btn" id="ccCourseBtn" onclick="toggleDynamicCourseFromUI()" title="Динамический курс" aria-label="Динамический курс" style="display:none;">🧭</button>
         <button class="action-btn" id="ccVoiceBtn" onclick="toggleMonolithVoiceFromUI()" title="Голосовой штурман" aria-label="Голосовой штурман">🔊</button>
         <button class="action-btn" id="ccChatBtn" onclick="openChatModal()" title="Чат" aria-label="Чат">💬</button>
         <button class="action-btn" id="ccActivityBtn" onclick="openActivityModal('dpsSpecbatMonth')" title="Активность ДПС/Спецбат" aria-label="Активность ДПС/Спецбат">👮🛡️</button>
@@ -2349,7 +2620,10 @@
     // Telegram bot username (used to open/start the bot when user is not in Telegram)
     // Формат: '@YourBot'
     const BOT_USERNAME = '@DPSRADARDPR180bot';
+    const SUPABASE_CLIENT_CACHE = {};
     function createSupabaseClient(token = null) {
+        const cacheKey = token ? `auth:${String(token)}` : 'anon';
+        if (SUPABASE_CLIENT_CACHE[cacheKey]) return SUPABASE_CLIENT_CACHE[cacheKey];
         const options = {
             auth: {
                 persistSession: false,
@@ -2360,7 +2634,9 @@
         if (token) {
             options.global = { headers: { Authorization: `Bearer ${token}` } };
         }
-        return window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, options);
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, options);
+        SUPABASE_CLIENT_CACHE[cacheKey] = client;
+        return client;
     }
 
     function clearSupabaseAuth() {
@@ -2882,6 +3158,7 @@
     let lastGpsAccuracyMeters = null;
     let gpsReliable = false;
     let gpsWarnedUnreliable = false;
+    let gpsTimeoutLastNotifyTs = 0;
     // ID отслеживания GPS (для остановки отслеживания)
     let gpsWatchId = null;
     // Маркер текущего местоположения на карте
@@ -2891,7 +3168,7 @@
     let lastUserPositionTime = null; // ms
     let userSpeedKmh = 0; // скорость в км/ч
     let userHeadingDeg = 0; // курс (0..360)
-    let dynamicCourseEnabled = true;
+    let dynamicCourseEnabled = false;
     let dynamicCourseCompassDeg = null;
     let dynamicCourseGpsDeg = null;
     let dynamicCourseFusedDeg = null;
@@ -2899,10 +3176,14 @@
     let dynamicCourseLastCompassTs = 0;
     let dynamicCourseCameraTimerId = null;
     let dynamicCourseCompassInit = false;
+    let followCameraAzimuthDeg = 0;
+    const FOLLOW_CAMERA_PITCH_DEG = 0;
+    const FOLLOW_CAMERA_AZIMUTH_SPEED_MS = 2;
     const DYNAMIC_COURSE_TILT = 0.8;
     const DYNAMIC_COURSE_AHEAD_MIN_M = 450;
     const DYNAMIC_COURSE_AHEAD_MAX_M = 2300;
     const DYNAMIC_COURSE_UPDATE_MS = 450;
+    const DRIVING_MODE_SPEED_THRESHOLD_KMH = 5;
     // Текущие серверные ачивки (ключ -> count)
     let currentAchievementCounts = {};
     // Коллекция для маркеров (чтобы не удалять служебные geoObjects при обновлении)
@@ -2924,7 +3205,7 @@
     const MAP_ENGINE_YM3_FAIL_KEY = 'mapEngineYm3Failed';
     const MAP_3D_MODE_KEY = 'map3dModeEnabled';
     const MAP_3D_MIN_ZOOM = 17.5;
-    const MAP_3D_TILT_DEG = 65;
+    const MAP_3D_TILT_DEG = 0;
     const MARKER_INSERT_NO_TS_EXP_KEY = 'markerInsertNoTsExp';
     const HELP_NOTIFY_AUTH_COOLDOWN_UNTIL_KEY = 'helpNotifyAuthCooldownUntil';
     // Порог подтверждений "уехали" для автоудаления метки
@@ -2948,6 +3229,10 @@
     // Спидометр: видимость
     let speedometerEnabled = true;
     let map3dEnabled = false;
+    let drivingModeEnabled = false;
+    let drivingNearestDpsDistanceMeters = null;
+    let drivingDpsCoordsCache = [];
+    const DRIVING_DPS_HUD_MIN_VALID_METERS = 20;
     // Анти-спам для меток
     const MARKER_RATE_LIMIT_MS = 120000;
     // Переменная для хранения выбранной фотографии
@@ -3117,6 +3402,60 @@
         const fallback = myMap.getCenter();
         const isYm3Active = String(activeMapEngine || '').includes('ymaps3') || String(mapAdapter?.mode || '').includes('ymaps3');
         if (isYm3Active) {
+            try {
+                const target = document.querySelector('.target');
+                const mapEl = document.getElementById('map');
+                const targetRect = target?.getBoundingClientRect?.();
+                const mapRect = mapEl?.getBoundingClientRect?.();
+                const center = (mapAdapter && typeof mapAdapter.getCenter === 'function')
+                    ? mapAdapter.getCenter()
+                    : fallback;
+                const zoom = (mapAdapter && typeof mapAdapter.getZoom === 'function')
+                    ? Number(mapAdapter.getZoom())
+                    : Number(myMap?.getZoom?.() || myMap?.__ym3LastZoom || 16);
+
+                if (
+                    targetRect && mapRect && Array.isArray(center) && center.length >= 2 &&
+                    Number.isFinite(Number(center[0])) && Number.isFinite(Number(center[1])) &&
+                    Number.isFinite(zoom)
+                ) {
+                    const latCenter = Number(center[0]);
+                    const lonCenter = Number(center[1]);
+                    const latRad = latCenter * Math.PI / 180;
+                    const metersPerPixel = (Math.cos(latRad) * 2 * Math.PI * 6378137) / (256 * Math.pow(2, zoom));
+
+                    const anchorX = targetRect.left + targetRect.width * 0.5;
+                    const anchorY = targetRect.top + targetRect.height * 0.68;
+                    const mapCenterX = mapRect.left + mapRect.width * 0.5;
+                    const mapCenterY = mapRect.top + mapRect.height * 0.5;
+
+                    const dxPx = anchorX - mapCenterX;
+                    const dyPx = anchorY - mapCenterY;
+
+                    const tiltDeg = Number(myMap?.__ym3LastTilt || FOLLOW_CAMERA_PITCH_DEG || 0);
+                    const tiltRad = tiltDeg * Math.PI / 180;
+                    const verticalScale = 1 / Math.max(0.25, Math.cos(tiltRad));
+
+                    const screenEastM = dxPx * metersPerPixel;
+                    const screenNorthM = -dyPx * metersPerPixel * verticalScale;
+
+                    const azimuthDeg = Number(myMap?.__ym3LastAzimuth || 0);
+                    const azimuthRad = azimuthDeg * Math.PI / 180;
+
+                    const eastM = (screenEastM * Math.cos(azimuthRad)) + (screenNorthM * Math.sin(azimuthRad));
+                    const northM = (-screenEastM * Math.sin(azimuthRad)) + (screenNorthM * Math.cos(azimuthRad));
+
+                    const dLat = northM / 111320;
+                    const dLon = eastM / Math.max(1e-6, 111320 * Math.cos(latRad));
+
+                    const resultLat = latCenter + dLat;
+                    const resultLon = lonCenter + dLon;
+                    if (Number.isFinite(resultLat) && Number.isFinite(resultLon)) {
+                        return [resultLat, resultLon];
+                    }
+                }
+            } catch (e) {}
+
             if (Array.isArray(fallback) && fallback.length >= 2 && Number.isFinite(Number(fallback[0])) && Number.isFinite(Number(fallback[1]))) {
                 return [Number(fallback[0]), Number(fallback[1])];
             }
@@ -3621,14 +3960,152 @@
 
     function updateSpeedometerUI(speedKmh) {
         const valueEl = document.getElementById('speedValue');
-        if (!valueEl) return;
-        valueEl.textContent = Math.max(0, Math.round(speedKmh || 0));
+        const normalizedSpeed = Math.max(0, Math.round(speedKmh || 0));
+        if (valueEl) valueEl.textContent = normalizedSpeed;
+
+        const speedHudEl = document.getElementById('speed-val');
+        if (speedHudEl) speedHudEl.textContent = String(normalizedSpeed);
+
+        setDrivingModeEnabled(normalizedSpeed > DRIVING_MODE_SPEED_THRESHOLD_KMH);
+    }
+
+    function getDrivingUiTargets() {
+        const selectors = [
+            '#ccLayersBtn',
+            '#ccCourseBtn',
+            '#patrolHeatmapBtn',
+            '#dtpHeatmapBtn',
+            '#map .ymaps-2-1-79-zoom',
+            '#map [class*="zoom-control"]'
+        ];
+        const out = [];
+        selectors.forEach(selector => {
+            document.querySelectorAll(selector).forEach(el => out.push(el));
+        });
+        return out;
+    }
+
+    function setDrivingModeEnabled(enabled) {
+        const next = !!enabled;
+        if (drivingModeEnabled === next) return;
+        drivingModeEnabled = next;
+
+        const body = document.body;
+        if (body) {
+            if (drivingModeEnabled) body.classList.add('driving-mode');
+            else body.classList.remove('driving-mode');
+        }
+
+        getDrivingUiTargets().forEach(el => {
+            if (drivingModeEnabled) el.classList.add('hide-ui');
+            else el.classList.remove('hide-ui');
+        });
+
+        updateDrivingHudDpsAlert();
+    }
+
+    function updateDrivingHudOnlineCount(rawText) {
+        const el = document.getElementById('online-count-val');
+        if (!el) return;
+        const source = String(rawText || document.getElementById('onlineCountText')?.textContent || '');
+        const matched = source.match(/(\d+)/);
+        el.textContent = matched ? matched[1] : '—';
+    }
+
+    function refreshDrivingNearestDpsDistanceFromCache() {
+        if (!Array.isArray(userLocation) || userLocation.length < 2 || !Array.isArray(drivingDpsCoordsCache) || drivingDpsCoordsCache.length === 0) {
+            drivingNearestDpsDistanceMeters = null;
+            updateDrivingHudDpsAlert();
+            return;
+        }
+        const userLat = Number(userLocation[0]);
+        const userLon = Number(userLocation[1]);
+        if (!Number.isFinite(userLat) || !Number.isFinite(userLon)) {
+            drivingNearestDpsDistanceMeters = null;
+            updateDrivingHudDpsAlert();
+            return;
+        }
+
+        let minDistance = Infinity;
+        let minDistanceAboveGuard = Infinity;
+        drivingDpsCoordsCache.forEach(p => {
+            if (!Array.isArray(p) || p.length < 2) return;
+            const lat = Number(p[0]);
+            const lon = Number(p[1]);
+            if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+            const dist = calculateDistance(userLat, userLon, lat, lon);
+            if (!Number.isFinite(dist)) return;
+            if (dist < minDistance) minDistance = dist;
+            if (dist >= DRIVING_DPS_HUD_MIN_VALID_METERS && dist < minDistanceAboveGuard) {
+                minDistanceAboveGuard = dist;
+            }
+        });
+
+        const bestDistance = Number.isFinite(minDistanceAboveGuard)
+            ? minDistanceAboveGuard
+            : (Number.isFinite(minDistance) && minDistance >= DRIVING_DPS_HUD_MIN_VALID_METERS ? minDistance : null);
+
+        drivingNearestDpsDistanceMeters = Number.isFinite(bestDistance) ? bestDistance : null;
+        updateDrivingHudDpsAlert();
+    }
+
+    function updateDrivingHudDpsAlert() {
+        const alertEl = document.getElementById('dps-alert');
+        if (!alertEl) return;
+        const dist = Number(drivingNearestDpsDistanceMeters);
+        if (!Number.isFinite(dist)) {
+            alertEl.textContent = '👮 ДПС: —';
+            alertEl.classList.remove('is-danger');
+            return;
+        }
+
+        const isDanger = dist < 1000;
+        const formatted = dist >= 1000 ? `${(dist / 1000).toFixed(1)} км` : `${Math.round(dist)} м`;
+        alertEl.textContent = `👮 ДПС: ${formatted}`;
+        if (isDanger) alertEl.classList.add('is-danger');
+        else alertEl.classList.remove('is-danger');
+    }
+
+    function updateDrivingFollowCenter() {
+        if (!myMap || !Array.isArray(userLocation) || userLocation.length < 2) return;
+        const lat = Number(userLocation[0]);
+        const lon = Number(userLocation[1]);
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+
+        try {
+            if (typeof myMap.update === 'function') {
+                myMap.update({
+                    location: {
+                        center: [lon, lat],
+                        duration: 500
+                    }
+                });
+                myMap.__ym3LastCenter = [lat, lon];
+                return;
+            }
+        } catch (e) {}
+
+        try {
+            const ym3Root = myMap?.__ym3Root;
+            if (ym3Root && typeof ym3Root.update === 'function') {
+                ym3Root.update({
+                    location: {
+                        center: [lon, lat],
+                        duration: 500
+                    }
+                });
+                myMap.__ym3LastCenter = [lat, lon];
+                return;
+            }
+        } catch (e) {}
+
+        try { myMap.setCenter([lat, lon], 17, { duration: 500 }); } catch (e) {}
     }
 
     function registerServiceWorker() {
         if (!('serviceWorker' in navigator)) return;
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('service-worker.js?v=4').catch(err => {
+            navigator.serviceWorker.register('service-worker.js?v=5').catch(err => {
                 console.warn('Service Worker registration failed:', err);
             });
         });
@@ -4685,6 +5162,27 @@
     let monolithKeepAliveTimerId = null;
     let monolithTtsResumeTimerId = null;
     let monolithAudioPrimed = false;
+    let monolithUserGestureUnlocked = false;
+    let monolithPwaUnlockHintShown = false;
+    let monolithStartupVoiceAnnounced = false;
+    let monolithStartupVoiceTimerId = null;
+    let monolithLastResumeRecoveryTs = 0;
+    const GPS_STALE_RECOVERY_MS = 45000;
+
+    const MONOLITH_STARTUP_DELAY_MS = 1500;
+    const MONOLITH_V2_STARTUP_LINES = [
+        'Система MONOLITH активирована. Карта загружена, база данных обновлена. Хорошей дороги!',
+        'Связь со спутниками установлена. Я слежу за обстановкой. В добрый путь.',
+        'MONOLITH на связи. Все посты и камеры нанесены на карту. Поехали.'
+    ];
+    const MONOLITH_V3_STARTUP_LINES = [
+        'Добро пожаловать в будущее, тестер. Ядро v3.0 запущено в режиме максимальной точности. Начинаю сканирование горизонта.',
+        'MONOLITH Next-Gen приветствует вас. Протокол ЗБТ активен. Удачных тестов на дорогах.',
+        'Система версии три-ноль готова. Визуализация в 3D активирована. Штурман на связи.'
+    ];
+    const MONOLITH_WARN_GPS_LINE = 'Внимание! Низкая точность GPS. Синяя метка может быть смещена. Пожалуйста, откалибруйте прицел.';
+    const MONOLITH_WARN_DB_LINE = 'Связь с базой нестабильна. Возможны задержки в обновлении меток.';
+    const MONOLITH_WARN_BATTERY_LINE = 'Внимание! Низкий заряд аккумулятора. Рекомендуется подключить устройство к питанию.';
 
     // very small silent WAV (short) as data URI
     const MONOLITH_SILENT_WAV = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=';
@@ -4752,6 +5250,12 @@
         monolithSelectedRuVoice = monolithPickRussianVoice();
     }
 
+    function monolithPickRandomLine(lines) {
+        if (!Array.isArray(lines) || !lines.length) return '';
+        const idx = Math.floor(Math.random() * lines.length);
+        return String(lines[idx] || '').trim();
+    }
+
     function monolithSpeakNextFromQueue() {
         if (!isMonolithVoiceEnabled()) return;
         if (!window.speechSynthesis) return;
@@ -4761,11 +5265,26 @@
         const next = monolithTtsQueue.shift();
         if (!next) return;
 
+        const payload = (typeof next === 'object' && next !== null)
+            ? next
+            : { text: next };
+        const text = String(payload.text || '').trim();
+        if (!text) {
+            monolithTtsIsSpeaking = false;
+            monolithSpeakNextFromQueue();
+            return;
+        }
+
+        const pitchValue = Number(payload.pitch);
+        const pitch = Number.isFinite(pitchValue)
+            ? Math.max(0.5, Math.min(2.0, pitchValue))
+            : 1.0;
+
         monolithTtsIsSpeaking = true;
-        const utterance = new SpeechSynthesisUtterance(String(next));
+        const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ru-RU';
         utterance.rate = 1.0;
-        utterance.pitch = 1.0;
+        utterance.pitch = pitch;
         utterance.volume = 1.0;
         if (!monolithSelectedRuVoice) monolithSelectedRuVoice = monolithPickRussianVoice();
         if (monolithSelectedRuVoice) utterance.voice = monolithSelectedRuVoice;
@@ -4795,21 +5314,86 @@
     }
 
     // Требование: если синтез уже говорит — новые фразы в очередь, не прерывать.
-    function aiSpeak(text) {
+    function aiSpeak(text, options = {}) {
         const t = String(text || '').trim();
         if (!t) return;
         if (!isMonolithVoiceEnabled()) return;
         if (!window.speechSynthesis) return;
 
+        const payload = {
+            text: t,
+            pitch: Number.isFinite(Number(options?.pitch)) ? Number(options.pitch) : 1.0
+        };
+
+        if (!monolithUserGestureUnlocked) {
+            monolithTtsQueue.push(payload);
+            if (!monolithPwaUnlockHintShown) {
+                monolithPwaUnlockHintShown = true;
+                try {
+                    showInAppNotification({
+                        title: '🔊 Активация звука',
+                        body: 'Для PWA нажмите один раз по экрану, чтобы включить голос ИИ в этом режиме.',
+                        priority: 'high'
+                    });
+                } catch (e) {}
+            }
+            return;
+        }
         monolithSoftResumeSpeech();
         monolithEnsureVoicesReady();
-        monolithTtsQueue.push(t);
+        monolithTtsQueue.push(payload);
 
         // при старте озвучки пытаемся удержать процесс живым (в пределах возможностей браузера)
         try { monolithMaybeUpdateWakeLock(); } catch (e) {}
         try { monolithMaybeStartKeepAliveAudio(); } catch (e) {}
 
         monolithSpeakNextFromQueue();
+    }
+
+    async function monolithAnnounceStartupStatus() {
+        if (monolithStartupVoiceAnnounced) return;
+        monolithStartupVoiceAnnounced = true;
+
+        if (monolithStartupVoiceTimerId) {
+            clearTimeout(monolithStartupVoiceTimerId);
+            monolithStartupVoiceTimerId = null;
+        }
+
+        monolithStartupVoiceTimerId = setTimeout(async () => {
+            if (!isMonolithVoiceEnabled()) return;
+
+            const engine = String(activeMapEngine || preferredMapEngine || '').toLowerCase();
+            const isV3Engine = engine.includes('ymaps3');
+
+            let access = null;
+            try { access = await getNextGenAccess(false); } catch (e) { access = null; }
+            const isV3Tester = !!(isV3Engine && (access?.isTester || access?.isAdmin));
+            const startupLine = monolithPickRandomLine(isV3Tester ? MONOLITH_V3_STARTUP_LINES : MONOLITH_V2_STARTUP_LINES);
+
+            if (startupLine) {
+                try { aiSpeak(startupLine, { pitch: isV3Tester ? 1.08 : 1.0 }); } catch (e) {}
+            }
+
+            const poorGps = !gpsReliable || (Number.isFinite(Number(lastGpsAccuracyMeters)) && Number(lastGpsAccuracyMeters) > 80);
+            if (poorGps) {
+                try { aiSpeak(MONOLITH_WARN_GPS_LINE, { pitch: isV3Tester ? 1.05 : 1.0 }); } catch (e) {}
+            }
+
+            const connectionUnstable = (typeof navigator !== 'undefined' && navigator.onLine === false);
+            if (connectionUnstable) {
+                try { aiSpeak(MONOLITH_WARN_DB_LINE, { pitch: isV3Tester ? 1.05 : 1.0 }); } catch (e) {}
+            }
+
+            try {
+                if (typeof navigator !== 'undefined' && typeof navigator.getBattery === 'function') {
+                    const battery = await navigator.getBattery();
+                    const isLowBattery = !!battery && battery.charging === false && Number(battery.level) <= 0.20;
+                    if (isLowBattery) {
+                        try { aiSpeak(MONOLITH_WARN_BATTERY_LINE, { pitch: isV3Tester ? 1.03 : 1.0 }); } catch (e) {}
+                    }
+                }
+            } catch (e) {}
+        }, MONOLITH_STARTUP_DELAY_MS);
     }
 
     async function monolithRequestWakeLock() {
@@ -4876,8 +5460,12 @@
         } catch (e) {}
     }
 
-    function monolithPrimeAudioOnce() {
+    function monolithPrimeAudioOnce(eventOrForce) {
+        const forced = eventOrForce === true;
+        const trustedGesture = !!(eventOrForce && eventOrForce.isTrusted === true);
+        if (!forced && !trustedGesture) return;
         if (monolithAudioPrimed) return;
+        monolithUserGestureUnlocked = true;
 
         // Android/WebView: часто нужно "разбудить" speechSynthesis после user gesture.
         try {
@@ -4902,6 +5490,7 @@
 
     function monolithEnsureAudioContext() {
         if (monolithAudioCtx) return monolithAudioCtx;
+        if (!monolithUserGestureUnlocked) return null;
         const Ctx = window.AudioContext || window.webkitAudioContext;
         if (!Ctx) return null;
         try {
@@ -4915,6 +5504,7 @@
 
     function monolithStartAudioContextKeepAlive() {
         if (!monolithIsVoiceSessionActive() || !monolithAudioPrimed) return;
+        if (!monolithUserGestureUnlocked) return;
         const ctx = monolithEnsureAudioContext();
         if (!ctx) return;
 
@@ -5356,10 +5946,12 @@
         const warningMax = getDynamicWarningMaxMeters();
 
         const prevState = markerDistanceState.get(markerId);
-        let trend = prevState?.lastTrend || 'approaching';
+        let trend = 'approaching';
         if (prevState && typeof prevState.lastDistance === 'number') {
-            if (distance > prevState.lastDistance + 25) trend = 'away';
-            else if (distance < prevState.lastDistance - 25) trend = 'approaching';
+            const deltaDistance = distance - Number(prevState.lastDistance);
+            if (deltaDistance > 25) trend = 'away';
+            else if (deltaDistance < -25) trend = 'approaching';
+            else trend = 'steady';
         }
         markerDistanceState.set(markerId, { lastDistance: distance, lastTrend: trend, lastUpdate: Date.now() });
 
@@ -5390,7 +5982,7 @@
             }
         } catch (e) {}
 
-        if (trend === 'away') {
+        if (trend === 'away' && prevState && typeof prevState.lastDistance === 'number') {
             if (currentNotification) {
                 distanceNotifications.delete(markerId);
                 stopWarningOutput();
@@ -5604,32 +6196,24 @@
     }
 
     function loadDynamicCourseEnabled() {
-        try {
-            const raw = localStorage.getItem(DYNAMIC_COURSE_ENABLED_KEY);
-            if (raw === 'true' || raw === 'false') dynamicCourseEnabled = (raw === 'true');
-        } catch (e) {}
+        dynamicCourseEnabled = false;
+        try { localStorage.removeItem(DYNAMIC_COURSE_ENABLED_KEY); } catch (e) {}
     }
 
     function saveDynamicCourseEnabled() {
-        try { localStorage.setItem(DYNAMIC_COURSE_ENABLED_KEY, dynamicCourseEnabled ? 'true' : 'false'); } catch (e) {}
+        dynamicCourseEnabled = false;
+        try { localStorage.removeItem(DYNAMIC_COURSE_ENABLED_KEY); } catch (e) {}
     }
 
     function updateCourseBtnUiState() {
         const btn = document.getElementById('ccCourseBtn');
         if (!btn) return;
-        btn.classList.toggle('active', !!dynamicCourseEnabled);
-        btn.classList.toggle('off', !dynamicCourseEnabled);
-        btn.textContent = dynamicCourseEnabled ? '🧭' : '🧱';
-        btn.title = dynamicCourseEnabled ? 'Динамический курс: ВКЛ' : 'Динамический курс: ВЫКЛ';
+        btn.style.display = 'none';
     }
 
     function toggleDynamicCourseFromUI() {
-        dynamicCourseEnabled = !dynamicCourseEnabled;
+        dynamicCourseEnabled = false;
         saveDynamicCourseEnabled();
-        if (dynamicCourseEnabled) {
-            requestDynamicCourseOrientationPermission().catch(()=>{});
-            try { updateDynamicCourseCamera(); } catch (e) {}
-        }
         updateCourseBtnUiState();
     }
 
@@ -5691,12 +6275,8 @@
                             // Не перетираем точные координаты мусором
                             return;
                         }
-                        // Если точных ещё нет — покажем хотя бы маркер, но без синка радиуса и автоследования
-                        userSpeedKmh = 0;
-                        userLocation = [latNum, lonNum];
-                        updateUserLocationMarker();
-                        updateSpeedometerUI(userSpeedKmh);
-                        console.log(`📍 GPS (не точно): ${latNum.toFixed(4)}, ${lonNum.toFixed(4)} (точность: ${Number(accuracy).toFixed(0)}м)`);
+                        // Не используем явно недостоверную точку как пользовательскую позицию
+                        // (иначе карта и proximity-логика уезжают в ложные координаты).
                         return;
                     }
 
@@ -5750,22 +6330,32 @@
                     // Обновляем маркер на карте (включая визуализацию скорости/ачивок/стиля)
                     updateUserLocationMarker();
                     updateSpeedometerUI(userSpeedKmh);
+                    refreshDrivingNearestDpsDistanceFromCache();
 
                     // Интеллектуальные подсказки по истории меток ДПС/Спецбат
                     maybeCheckSmartHint(latitude, longitude);
 
                     // Центрируем карту если автоследование включено
                     if (autoFollow && myMap && userLocation && !disableAutoFollowOnce) {
-                        try { updateDynamicCourseCamera(); } catch (e) {
-                            try { myMap.setCenter(userLocation, 17); } catch (e2) { console.warn(e2); }
-                        }
+                        try {
+                            if ((Number(userSpeedKmh) || 0) > DRIVING_MODE_SPEED_THRESHOLD_KMH) {
+                                updateDrivingFollowCenter();
+                            } else {
+                                updateDynamicCourseCamera();
+                            }
+                        } catch (e2) { console.warn(e2); }
                     }
                     if (disableAutoFollowOnce) disableAutoFollowOnce = false;
                     console.log(`📍 GPS: ${latitude.toFixed(4)}, ${longitude.toFixed(4)} (точность: ${accuracy.toFixed(0)}м) speed: ${userSpeedKmh} km/h`);
                 },
                 (error) => {
                     // Ошибка получения координат
-                    console.warn('Ошибка GPS:', error.message);
+                    const timeoutByCode = Number(error?.code) === Number(error?.TIMEOUT || 3);
+                    const timeoutByMessage = /timeout expired|timeout|истекло время/i.test(String(error?.message || ''));
+                    const isTimeoutError = timeoutByCode || timeoutByMessage;
+                    if (!isTimeoutError) {
+                        console.warn('Ошибка GPS:', error?.message || error);
+                    }
                     switch(error.code) {
                         case error.PERMISSION_DENIED:
                             console.warn('Разрешение на доступ к GPS отклонено');
@@ -5793,7 +6383,15 @@
                             }, ()=>{}, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
                             break;
                         case error.TIMEOUT:
-                            console.warn('Истекло время ожидания GPS — попробуйте ещё раз');
+                            // В Telegram WebView таймауты бывают часто: не спамим лог каждую попытку
+                            if ((Date.now() - Number(gpsTimeoutLastNotifyTs || 0)) > 30000) {
+                                gpsTimeoutLastNotifyTs = Date.now();
+                                console.warn('Истекло время ожидания GPS — продолжаю попытки, включите точную геолокацию/GPS и подождите 10–20 секунд');
+                            }
+                            if (!userLocation && Array.isArray(lastReliableUserLocation) && lastReliableUserLocation.length >= 2) {
+                                userLocation = [Number(lastReliableUserLocation[0]), Number(lastReliableUserLocation[1])];
+                                updateUserLocationMarker();
+                            }
                             break;
                     }
                 },
@@ -5944,13 +6542,6 @@
                 const zoom = Number.isFinite(Number(camera.zoom)) ? Number(camera.zoom) : (map.getZoom ? map.getZoom() : 16);
                 const duration = Number.isFinite(Number(camera.duration)) ? Number(camera.duration) : 500;
 
-                try {
-                    if (map.options && typeof map.options.set === 'function') {
-                        if (Number.isFinite(Number(camera.azimuth))) map.options.set('azimuth', normalizeDeg(camera.azimuth));
-                        if (Number.isFinite(Number(camera.tilt))) map.options.set('tilt', Number(camera.tilt));
-                    }
-                } catch (e) {}
-
                 if (center && map.setCenter) {
                     try {
                         map.setCenter(center, zoom, { duration, timingFunction: 'ease-out' });
@@ -5990,112 +6581,50 @@
     }
 
     function loadMap3dPreference() {
-        try {
-            map3dEnabled = localStorage.getItem(MAP_3D_MODE_KEY) === '1';
-        } catch (e) {
-            map3dEnabled = false;
-        }
+        map3dEnabled = false;
+        try { localStorage.removeItem(MAP_3D_MODE_KEY); } catch (e) {}
     }
 
     function saveMap3dPreference() {
-        try { localStorage.setItem(MAP_3D_MODE_KEY, map3dEnabled ? '1' : '0'); } catch (e) {}
+        map3dEnabled = false;
+        try { localStorage.removeItem(MAP_3D_MODE_KEY); } catch (e) {}
     }
 
     function updateMap3dToggleUi() {
         const isYm3Active = String(activeMapEngine || preferredMapEngine || '').includes('ymaps3');
-        const effectiveOn = !!(map3dEnabled && isYm3Active);
 
         const floatingBtn = document.getElementById('map3dToggleFloating');
         if (floatingBtn) {
-            floatingBtn.classList.toggle('is-on', effectiveOn);
-            floatingBtn.textContent = effectiveOn ? '3D ON' : '3D OFF';
-            floatingBtn.title = isYm3Active ? (effectiveOn ? 'Отключить 3D режим карты' : 'Включить 3D режим карты') : '3D доступно только в ymaps3';
+            floatingBtn.classList.remove('is-on');
+            floatingBtn.textContent = '2D';
+            floatingBtn.title = '2D режим (наклон и 3D отключены)';
+            floatingBtn.style.display = 'none';
         }
 
         const settingsBtn = document.getElementById('map3dSettingsBtn');
         if (settingsBtn) {
-            settingsBtn.classList.toggle('active', effectiveOn);
-            settingsBtn.textContent = `3D: ${effectiveOn ? 'ВКЛ' : 'ВЫКЛ'}`;
+            settingsBtn.classList.remove('active');
+            settingsBtn.textContent = '2D: ВКЛ';
+            settingsBtn.style.display = 'none';
         }
 
         const hint = document.getElementById('map3dSettingsHint');
         if (hint) {
             hint.textContent = isYm3Active
-                ? `Режим карты: ${effectiveOn ? '3D (наклон + здания)' : '2D (плоский режим)'}`
-                : '3D доступно только в ymaps3';
-        }
-    }
-
-    function ensureYm3BuildingsLayer(enabled) {
-        try {
-            const root = myMap?.__ym3Root;
-            if (!root) return false;
-            const YMapLayerCtor = myMap?.__ym3Core?.YMapLayer || ymaps3?.YMapLayer;
-            if (!YMapLayerCtor) return false;
-
-            if (enabled) {
-                if (!myMap.__ym3BuildingsLayer) {
-                    myMap.__ym3BuildingsLayer = new YMapLayerCtor({ source: 'scheme', type: 'buildings', zIndex: 1800 });
-                    root.addChild(myMap.__ym3BuildingsLayer);
-                }
-            } else if (myMap.__ym3BuildingsLayer) {
-                try { root.removeChild(myMap.__ym3BuildingsLayer); } catch (e) {}
-                myMap.__ym3BuildingsLayer = null;
-            }
-            return true;
-        } catch (e) {
-            return false;
+                ? 'Режим карты: 2D (плоский, стабильный)'
+                : 'Режим карты: 2D (legacy)';
         }
     }
 
     function applyMap3dMode(options = {}) {
-        const animate = options?.animate !== false;
-        const root = myMap?.__ym3Root;
-        const isYm3Active = String(activeMapEngine || '').includes('ymaps3') && !!root;
-        if (!isYm3Active) {
-            updateMap3dToggleUi();
-            return false;
-        }
-
-        const center = Array.isArray(myMap.__ym3LastCenter) ? myMap.__ym3LastCenter : (typeof myMap.getCenter === 'function' ? myMap.getCenter() : [48.01, 37.8]);
-        const currentZoom = Number.isFinite(Number(myMap.__ym3LastZoom)) ? Number(myMap.__ym3LastZoom) : (typeof myMap.getZoom === 'function' ? Number(myMap.getZoom() || 16) : 16);
-        const zoom = map3dEnabled ? Math.max(MAP_3D_MIN_ZOOM, currentZoom) : currentZoom;
-        const lat = Number(center?.[0]);
-        const lon = Number(center?.[1]);
-        if (!Number.isFinite(lat) || !Number.isFinite(lon)) return false;
-
-        const tilt = map3dEnabled ? MAP_3D_TILT_DEG : 0;
-        const azimuth = Number.isFinite(Number(myMap.__ym3LastAzimuth)) ? Number(myMap.__ym3LastAzimuth) : 0;
-        ensureYm3BuildingsLayer(map3dEnabled);
-
-        const location = {
-            center: [lon, lat],
-            zoom,
-            azimuth,
-            tilt,
-            duration: animate ? 650 : 0
-        };
-
-        try {
-            if (typeof root.setLocation === 'function') root.setLocation(location);
-            else root.update({ location });
-            myMap.__ym3LastTilt = tilt;
-            myMap.__ym3LastAzimuth = azimuth;
-            myMap.__ym3LastZoom = zoom;
-        } catch (e) {}
-
         updateMap3dToggleUi();
-        return true;
+        return false;
     }
 
     function toggleMap3dFromUI() {
-        map3dEnabled = !map3dEnabled;
+        map3dEnabled = false;
         saveMap3dPreference();
-        const applied = applyMap3dMode({ animate: true });
-        if (!applied) {
-            updateMap3dToggleUi();
-            showInAppNotification({ title: '3D режим', body: '3D доступен только при активном ymaps3.', priority: 'low' });
-        }
+        updateMap3dToggleUi();
     }
 
     window.toggleMap3dFromUI = toggleMap3dFromUI;
@@ -6107,6 +6636,10 @@
 
             const engine = String(activeMapEngine || preferredMapEngine || '').toLowerCase();
             const isV3 = engine.includes('ymaps3');
+            try {
+                document.body.classList.toggle('engine-v3', isV3);
+                document.body.classList.toggle('engine-v2', !isV3);
+            } catch (e) {}
             badge.classList.toggle('is-v3', isV3);
             badge.classList.toggle('is-v2', !isV3);
             badge.textContent = isV3 ? '🗺️ ymaps3' : '🗺️ ymaps2 legacy';
@@ -6188,10 +6721,39 @@
                 const FeaturesCtor = ym3Core?.YMapDefaultFeaturesLayer || ymaps3?.YMapDefaultFeaturesLayer;
                 const MarkerCtor = ym3Markers?.YMapMarker || ymaps3?.YMapMarker;
                 if (YMapCtor && SchemeCtor && FeaturesCtor && MarkerCtor) {
+                    map3dEnabled = false;
+                    const YM3_SCHEME_CUSTOMIZATION = [
+                        { tags: { any: ['road'] }, elements: 'geometry.fill', stylers: { color: '#2f3136' } },
+                        { tags: { any: ['road'] }, elements: 'geometry.stroke', stylers: { color: '#3b3f45', width: 1 } },
+                        { tags: { any: ['building'] }, elements: 'geometry.fill', stylers: { color: '#44484e' } },
+                        { tags: { any: ['building'] }, elements: 'geometry.stroke', stylers: { color: '#34383d', width: 1 } },
+                        { tags: { any: ['label', 'street'] }, elements: 'label.text.fill', stylers: { color: '#ffffff' } },
+                        { tags: { any: ['label', 'street'] }, elements: 'label.text.outline', stylers: { color: '#111111', width: 1 } }
+                    ];
                     const root = new YMapCtor(visualMapHost, {
-                        location: { center: [37.80, 48.01], zoom: map3dEnabled ? Math.max(16, MAP_3D_MIN_ZOOM) : 16, azimuth: 0, tilt: map3dEnabled ? MAP_3D_TILT_DEG : 0 }
+                        location: {
+                            center: [37.80, 48.01],
+                            zoom: 16,
+                            pitch: FOLLOW_CAMERA_PITCH_DEG,
+                            tilt: FOLLOW_CAMERA_PITCH_DEG,
+                            azimuth: 0
+                        },
+                        camera: {
+                            maxTilt: 80,
+                            minTilt: 0
+                        }
                     });
-                    const scheme = new SchemeCtor({});
+                    try {
+                        if (typeof root.setUpdateProps === 'function') {
+                            root.setUpdateProps({ location: { pitch: FOLLOW_CAMERA_PITCH_DEG, tilt: FOLLOW_CAMERA_PITCH_DEG } });
+                        }
+                    } catch (e) {}
+                    let scheme = null;
+                    try {
+                        scheme = new SchemeCtor({ id: 'scheme', customization: YM3_SCHEME_CUSTOMIZATION });
+                    } catch (e) {
+                        scheme = new SchemeCtor({ id: 'scheme' });
+                    }
                     root.addChild(scheme);
                     const features = new ymaps3.YMapDefaultFeaturesLayer({});
                     root.addChild(features);
@@ -6205,7 +6767,7 @@
                     myMap.__ym3BuildingsLayer = null;
                     myMap.__ym3LastCenter = [48.01, 37.80];
                     myMap.__ym3LastZoom = 16;
-                    myMap.__ym3LastTilt = map3dEnabled ? MAP_3D_TILT_DEG : 0;
+                    myMap.__ym3LastTilt = FOLLOW_CAMERA_PITCH_DEG;
                     myMap.__ym3LastAzimuth = 0;
 
                     const approximateBoundsFromCenterZoom = (center, zoom) => {
@@ -6235,15 +6797,19 @@
                         if (!Number.isFinite(lat) || !Number.isFinite(lon)) return myMap;
                         myMap.__ym3LastCenter = [lat, lon];
                         myMap.__ym3LastZoom = nextZoom;
-                        myMap.__ym3LastAzimuth = Number.isFinite(Number(options?.azimuth)) ? Number(options.azimuth) : Number(myMap.__ym3LastAzimuth || 0);
+                        myMap.__ym3LastAzimuth = Number.isFinite(Number(options?.azimuth))
+                            ? normalizeDeg(Number(options.azimuth))
+                            : Number(myMap.__ym3LastAzimuth || 0);
+                        myMap.__ym3LastTilt = FOLLOW_CAMERA_PITCH_DEG;
                         myMap.__ym3LastBounds = approximateBoundsFromCenterZoom(myMap.__ym3LastCenter, myMap.__ym3LastZoom);
                         try {
                             root.update({
                                 location: {
                                     center: [lon, lat],
                                     zoom: nextZoom,
-                                    azimuth: Number(options?.azimuth || 0),
-                                    tilt: Number.isFinite(Number(options?.tilt)) ? Number(options.tilt) : (map3dEnabled ? MAP_3D_TILT_DEG : 0)
+                                    azimuth: Number(myMap.__ym3LastAzimuth || 0),
+                                    pitch: FOLLOW_CAMERA_PITCH_DEG,
+                                    tilt: FOLLOW_CAMERA_PITCH_DEG
                                 }
                             });
                         } catch (e) {}
@@ -6282,9 +6848,6 @@
         mapAdapter = createMapAdapter(activeMapEngine, myMap, markersCollection);
         updateMapEngineBadge();
         updateMap3dToggleUi();
-        if (activeMapEngine === 'ymaps3-compat') {
-            try { applyMap3dMode({ animate: false }); } catch (e) {}
-        }
 
         if (activeMapEngine === 'ymaps3-compat') {
             console.info('🧭 ymaps3 active: running staged adapter mode with legacy-safe fallback.');
@@ -6411,8 +6974,8 @@
                                 if (Number.isFinite(lat) && Number.isFinite(lon)) {
                                     map.__ym3LastCenter = [lat, lon];
                                     if (Number.isFinite(zoom)) map.__ym3LastZoom = zoom;
-                                    if (Number.isFinite(Number(loc?.azimuth))) map.__ym3LastAzimuth = Number(loc.azimuth);
-                                    if (Number.isFinite(Number(loc?.tilt))) map.__ym3LastTilt = Number(loc.tilt);
+                                    map.__ym3LastAzimuth = 0;
+                                    map.__ym3LastTilt = 0;
                                     map.__ym3LastBounds = approximateBoundsFromCenterZoom([lat, lon], map.__ym3LastZoom || 16);
                                 }
                             } catch (e) {}
@@ -6619,185 +7182,291 @@
         attachYandexCameraCompat(myMap);
         try {
             if (typeof myMap.setBehaviors === 'function') {
-                myMap.setBehaviors(['drag', 'scrollZoom', 'tilt', 'rotate']);
+                myMap.setBehaviors(['drag', 'scrollZoom']);
                 return;
             }
         } catch (e) {}
         try {
             if (myMap.behaviors && typeof myMap.behaviors.enable === 'function') {
-                myMap.behaviors.enable(['drag', 'scrollZoom', 'tilt', 'rotate']);
+                myMap.behaviors.enable(['drag', 'scrollZoom']);
             }
         } catch (e) {}
     }
 
     function updateDynamicCourseCamera() {
-        if (!dynamicCourseEnabled) return;
         if (!myMap || !autoFollow || !userLocation) return;
+        const speedKmh = Number(userSpeedKmh) || 0;
+        const speedMs = speedKmh / 3.6;
+        const heading = normalizeDeg(Number(userHeadingDeg) || 0);
 
-        const heading = getDynamicCourseHeadingDeg();
-        if (!Number.isFinite(Number(heading))) return;
+        const hasHeading = Number.isFinite(Number(heading));
+        if (!Number.isFinite(Number(followCameraAzimuthDeg))) {
+            followCameraAzimuthDeg = hasHeading ? heading : 0;
+        }
+        if (hasHeading) {
+            // Стрелка меняется мгновенно, камера — плавно догоняет
+            followCameraAzimuthDeg = smoothAngleDeg(followCameraAzimuthDeg, heading, 0.18);
+        }
 
-        const speed = Number(userSpeedKmh) || 0;
-        const targetZoom = getDynamicFollowZoomBySpeed(speed);
-        const aheadMeters = Math.max(
-            DYNAMIC_COURSE_AHEAD_MIN_M,
-            Math.min(DYNAMIC_COURSE_AHEAD_MAX_M, 650 + speed * 10)
-        );
-        const cameraTarget = destinationPointByBearing(userLocation[0], userLocation[1], heading, aheadMeters);
-
-        const smoothedHeading = (dynamicCourseFusedDeg === null)
-            ? normalizeDeg(heading)
-            : smoothAngleDeg(dynamicCourseFusedDeg, heading, 0.22);
-        dynamicCourseFusedDeg = smoothedHeading;
-        userHeadingDeg = smoothedHeading;
+        // Смещение центра вперёд по курсу: машина оказывается ближе к нижней части экрана
+        const aheadMeters = hasHeading
+            ? Math.max(120, Math.min(520, 170 + speedMs * 22))
+            : 180;
+        const cameraTarget = hasHeading
+            ? destinationPointByBearing(userLocation[0], userLocation[1], heading, aheadMeters)
+            : [Number(userLocation[0]), Number(userLocation[1])];
 
         try {
-            const mapAny = myMap;
-            if (typeof mapAny?.setCamera === 'function') {
-                mapAny.setCamera({
-                    center: cameraTarget,
-                    azimuth: smoothedHeading,
-                    tilt: DYNAMIC_COURSE_TILT,
-                    zoom: targetZoom,
-                    duration: 500
-                });
-            } else if (mapAny?.options?.set) {
-                mapAny.options.set('rotation', smoothedHeading);
-                mapAny.options.set('azimuth', smoothedHeading);
-                mapAny.options.set('tilt', DYNAMIC_COURSE_TILT);
+            const ym3Root = myMap?.__ym3Root;
+            if (ym3Root) {
+                const loc = {
+                    center: [Number(cameraTarget[1]), Number(cameraTarget[0])],
+                    zoom: 17,
+                    azimuth: followCameraAzimuthDeg,
+                    pitch: FOLLOW_CAMERA_PITCH_DEG,
+                    tilt: FOLLOW_CAMERA_PITCH_DEG,
+                    duration: 800,
+                    easing: 'linear'
+                };
+                if (typeof ym3Root.setLocation === 'function') ym3Root.setLocation(loc);
+                else ym3Root.update({ location: loc });
+
+                myMap.__ym3LastCenter = [Number(cameraTarget[0]), Number(cameraTarget[1])];
+                myMap.__ym3LastZoom = 17;
+                myMap.__ym3LastAzimuth = Number(followCameraAzimuthDeg || 0);
+                myMap.__ym3LastTilt = Number(FOLLOW_CAMERA_PITCH_DEG);
+                return;
             }
         } catch (e) {}
 
-        const canMove = !Number.isFinite(dynamicCourseLastCameraDeg)
-            || Math.abs(shortestAngleDeltaDeg(dynamicCourseLastCameraDeg, smoothedHeading)) >= 1.2
-            || speed >= 12;
-        if (!canMove) return;
-
-        dynamicCourseLastCameraDeg = smoothedHeading;
         try {
-            myMap.setCenter(cameraTarget, targetZoom, { duration: 500, timingFunction: 'ease-out' });
+            if (myMap?.options?.set && hasHeading) {
+                myMap.options.set('rotation', followCameraAzimuthDeg);
+                myMap.options.set('azimuth', followCameraAzimuthDeg);
+            }
+            myMap.setCenter(cameraTarget, 17, { duration: 800, timingFunction: 'linear' });
         } catch (e) {
-            try { myMap.setCenter(cameraTarget, targetZoom); } catch (e2) {}
+            try { myMap.setCenter(cameraTarget, 17); } catch (e2) {}
         }
     }
 
+    window.updateCourse = (heading) => {
+        const nextHeading = normalizeDeg(Number(heading) || 0);
+        followCameraAzimuthDeg = nextHeading;
+        try {
+            const ym3Root = myMap?.__ym3Root;
+            const center = Array.isArray(myMap?.__ym3LastCenter) && myMap.__ym3LastCenter.length >= 2
+                ? myMap.__ym3LastCenter
+                : (Array.isArray(userLocation) && userLocation.length >= 2 ? userLocation : [48.0159, 37.8041]);
+            const zoom = Number.isFinite(Number(myMap?.__ym3LastZoom)) ? Number(myMap.__ym3LastZoom) : 17;
+
+            if (ym3Root) {
+                const loc = {
+                    center: [Number(center[1]), Number(center[0])],
+                    zoom,
+                    tilt: FOLLOW_CAMERA_PITCH_DEG,
+                    pitch: FOLLOW_CAMERA_PITCH_DEG,
+                    azimuth: nextHeading,
+                    duration: 1000,
+                    easing: 'linear'
+                };
+                if (typeof ym3Root.setLocation === 'function') ym3Root.setLocation(loc);
+                else ym3Root.update({ location: loc });
+                myMap.__ym3LastAzimuth = nextHeading;
+                myMap.__ym3LastTilt = FOLLOW_CAMERA_PITCH_DEG;
+                return;
+            }
+            if (myMap?.options?.set) {
+                myMap.options.set('rotation', nextHeading);
+                myMap.options.set('azimuth', nextHeading);
+            }
+        } catch (e) {}
+    };
+
     function startDynamicCourseLoop() {
-        if (dynamicCourseCameraTimerId) return;
-        dynamicCourseCameraTimerId = setInterval(() => {
-            try { updateDynamicCourseCamera(); } catch (e) {}
-        }, DYNAMIC_COURSE_UPDATE_MS);
+        if (dynamicCourseCameraTimerId) {
+            clearInterval(dynamicCourseCameraTimerId);
+            dynamicCourseCameraTimerId = null;
+        }
+        return;
     }
 
     function initDynamicCourseSensors() {
-        if (dynamicCourseCompassInit) return;
-        dynamicCourseCompassInit = true;
-        const orientationAllowed = isFeatureAllowedByPolicy('accelerometer') && isFeatureAllowedByPolicy('gyroscope');
-        if (!orientationAllowed) {
-            if (!initDynamicCourseSensors.__policyWarned) {
-                initDynamicCourseSensors.__policyWarned = true;
-                console.info('Компасные сенсоры недоступны по policy — курс остаётся по GPS.');
-            }
-            startDynamicCourseLoop();
-            return;
-        }
-        try {
-            window.addEventListener('deviceorientationabsolute', onDynamicCourseOrientation, true);
-            window.addEventListener('deviceorientation', onDynamicCourseOrientation, true);
-        } catch (e) {}
+        dynamicCourseEnabled = false;
         startDynamicCourseLoop();
+        return;
     }
     
-    // Функция обновления маркера текущего местоположения на карте
+    // --- YM3: Плавный кастомный маркер пользователя ---
+    let ym3UserMarker = null;
+    let ym3UserMarkerEl = null;
+    let ym3UserArrowEl = null;
+    let ym3UserPulseEl = null;
+    let legacyUserIconContentLayout = null;
+    let lastUserHeading = 0;
+    let lastUserCoords = null;
+    const MIN_ROTATE_SPEED_MS = 1.5;
+    const LEGACY_USER_MARKER_SIZE = 36;
+    const LEGACY_USER_MARKER_HALF = Math.round(LEGACY_USER_MARKER_SIZE / 2);
+    const LEGACY_MOVING_AVG_WINDOW = 5;
+    let legacyUserCoordsHistory = [];
+
+    function applyLegacyMovingAverage(lat, lon) {
+        const latNum = Number(lat);
+        const lonNum = Number(lon);
+        if (!Number.isFinite(latNum) || !Number.isFinite(lonNum)) {
+            if (Array.isArray(lastUserCoords) && lastUserCoords.length >= 2) return [Number(lastUserCoords[0]), Number(lastUserCoords[1])];
+            return [48.01, 37.80];
+        }
+
+        const usePoint = !gpsReliable && legacyUserCoordsHistory.length > 0
+            ? legacyUserCoordsHistory[legacyUserCoordsHistory.length - 1]
+            : [latNum, lonNum];
+
+        legacyUserCoordsHistory.push(usePoint);
+        if (legacyUserCoordsHistory.length > LEGACY_MOVING_AVG_WINDOW) {
+            legacyUserCoordsHistory = legacyUserCoordsHistory.slice(-LEGACY_MOVING_AVG_WINDOW);
+        }
+
+        let sumLat = 0;
+        let sumLon = 0;
+        legacyUserCoordsHistory.forEach(p => {
+            sumLat += Number(p[0]) || 0;
+            sumLon += Number(p[1]) || 0;
+        });
+
+        const denom = legacyUserCoordsHistory.length || 1;
+        return [sumLat / denom, sumLon / denom];
+    }
+
+    function buildUserMarkerHtmlForMap(headingDeg) {
+        const safeHeading = Number.isFinite(Number(headingDeg)) ? Number(headingDeg) : 0;
+        return `
+            <div class="user-marker ym3-user-marker" style="pointer-events:none; width:36px; height:36px;">
+                <div class="ym3-user-halo"></div>
+                <div class="ym3-user-pulse"></div>
+                <div class="ym3-user-arrow" style="transform:translate(-50%, -50%) rotate(${safeHeading}deg)"></div>
+            </div>
+        `;
+    }
+
+    function getLegacyUserIconContentLayout() {
+        if (legacyUserIconContentLayout) return legacyUserIconContentLayout;
+        if (!window.ymaps?.templateLayoutFactory?.createClass) return null;
+        try {
+            legacyUserIconContentLayout = ymaps.templateLayoutFactory.createClass('$[properties.iconContent]');
+        } catch (e) {
+            legacyUserIconContentLayout = null;
+        }
+        return legacyUserIconContentLayout;
+    }
+
+    function applyAutoFollowInterfaceMode() {
+        const hideUi = !!autoFollow;
+        try {
+            document.body.classList.toggle('autofollow-ui-hidden', hideUi);
+        } catch (e) {}
+
+        const card = document.getElementById('actionCard');
+        const openBtn = document.getElementById('openActionBtn');
+        if (hideUi) {
+            actionCardVisible = false;
+            if (card) card.classList.add('hidden');
+            if (openBtn) openBtn.classList.remove('visible');
+        } else {
+            if (card) card.classList.toggle('hidden', !actionCardVisible);
+            if (openBtn) openBtn.classList.toggle('visible', !actionCardVisible);
+        }
+
+        try { setRightActionsHidden(hideUi || !!actionCardVisible); } catch (e) {}
+    }
     function updateUserLocationMarker() {
         if (!userLocation || !myMap) return;
 
-        if (isAdmin && adminInvisible) {
-            if (userLocationMarker) {
-                try { myMap.geoObjects.remove(userLocationMarker); } catch(e) {}
-                userLocationMarker = null;
+        // Только для ymaps3
+        if (window.ymaps3 && myMap.__ym3Root) {
+            const [lat, lon] = userLocation;
+            const speed = Number(userSpeedKmh) || 0;
+            const speedMs = speed / 3.6;
+            const heading = (Number(userHeadingDeg) || 0) % 360;
+            // Создаём маркер один раз
+            if (!ym3UserMarker) {
+                // HTML структура маркера
+                ym3UserMarkerEl = document.createElement('div');
+                                ym3UserMarkerEl.className = 'user-marker ym3-user-marker';
+                                ym3UserMarkerEl.style.pointerEvents = 'none';
+                                ym3UserMarkerEl.style.width = '36px';
+                                ym3UserMarkerEl.style.height = '36px';
+                ym3UserMarkerEl.innerHTML = `
+                                    <div class="ym3-user-halo"></div>
+                  <div class="ym3-user-pulse"></div>
+                  <div class="ym3-user-arrow"></div>
+                `;
+                ym3UserArrowEl = ym3UserMarkerEl.querySelector('.ym3-user-arrow');
+                ym3UserPulseEl = ym3UserMarkerEl.querySelector('.ym3-user-pulse');
+
+                // Создаём маркер
+                ym3UserMarker = new ymaps3.YMapMarker({ coordinates: [lon, lat] }, ym3UserMarkerEl);
+                const parent = myMap.__ym3MarkerLayer || myMap.__ym3Root;
+                parent.addChild(ym3UserMarker);
+            } else {
+                // Плавно обновляем координаты
+                ym3UserMarker.update({ coordinates: [lon, lat] });
             }
+            // Плавный поворот стрелки
+            if (ym3UserArrowEl) {
+                if (speedMs > MIN_ROTATE_SPEED_MS && Number.isFinite(heading)) {
+                    ym3UserArrowEl.style.transform = `translate(-50%, -50%) rotate(${heading}deg)`;
+                } else {
+                    ym3UserArrowEl.style.transform = `translate(-50%, -50%) rotate(${lastUserHeading}deg)`;
+                }
+                lastUserHeading = (speedMs > MIN_ROTATE_SPEED_MS && Number.isFinite(heading)) ? heading : lastUserHeading;
+            }
+            lastUserCoords = [lat, lon];
             return;
         }
 
-        // Удаляем старый маркер если он есть
-        if (userLocationMarker) {
-            try { myMap.geoObjects.remove(userLocationMarker); } catch(e){}
+        if (!window.ymaps || typeof ymaps.Placemark !== 'function') return;
+        const [lat, lon] = userLocation;
+        const [smoothLat, smoothLon] = applyLegacyMovingAverage(lat, lon);
+        const speed = Number(userSpeedKmh) || 0;
+        const speedMs = speed / 3.6;
+        const heading = (Number(userHeadingDeg) || 0) % 360;
+        const visualHeading = (speedMs > MIN_ROTATE_SPEED_MS && Number.isFinite(heading)) ? heading : lastUserHeading;
+        if (speedMs > MIN_ROTATE_SPEED_MS && Number.isFinite(heading)) {
+            lastUserHeading = heading;
         }
 
-                const speed = Number(userSpeedKmh) || 0; // km/h
-                const size = 46;
-                const heading = (Number(userHeadingDeg) || 0) % 360;
-
-                // Кастомный маркер: чёрная стрелка-треугольник + поворот по курсу
-                const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-    <rect width="100%" height="100%" fill="transparent"/>
-    <g transform="rotate(${heading.toFixed(1)} ${size/2} ${size/2})">
-        <path d="M ${size/2} ${size*0.10} L ${size*0.78} ${size*0.86} L ${size/2} ${size*0.70} L ${size*0.22} ${size*0.86} Z"
-                    fill="#0b0b0b" stroke="rgba(255,255,255,0.88)" stroke-width="1.6" stroke-linejoin="round"/>
-    </g>
-    <circle cx="${size/2}" cy="${size/2}" r="${size*0.49}" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
-</svg>`;
-
-        if (isAdmin) {
-            const adminSize = 36;
-            const adminIconHtml = `
-                <div class="admin-marker admin-marker--self">
-                    <span class="admin-siren admin-siren-left"></span>
-                    <span class="admin-siren admin-siren-right"></span>
-                    <span class="admin-marker-core">🚗</span>
-                    <span class="admin-marker-badge">♛</span>
-                </div>
-            `;
-            userLocationMarker = new ymaps.Placemark(userLocation,
-                {
-                    hintContent: 'Вы здесь (Админ)',
-                    balloonContent: `👑 Админ на связи<br>Скорость: ${speed} км/ч`
-                },
-                {
-                    iconLayout: 'default#imageWithContent',
-                    iconContent: adminIconHtml,
-                    iconImageSize: [adminSize, adminSize],
-                    iconImageOffset: [-(adminSize/2), -(adminSize/2)],
-                    zIndex: 1100
+        const iconContent = buildUserMarkerHtmlForMap(visualHeading);
+        try {
+            if (!userLocationMarker) {
+                const iconContentLayout = getLegacyUserIconContentLayout();
+                userLocationMarker = new ymaps.Placemark(
+                    [smoothLat, smoothLon],
+                    { iconContent },
+                    {
+                        iconLayout: 'default#imageWithContent',
+                        iconImageHref: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
+                        iconImageSize: [LEGACY_USER_MARKER_SIZE, LEGACY_USER_MARKER_SIZE],
+                        iconImageOffset: [-LEGACY_USER_MARKER_HALF, -LEGACY_USER_MARKER_HALF],
+                        iconContentLayout
+                    }
+                );
+                if (myMap?.geoObjects?.add) myMap.geoObjects.add(userLocationMarker);
+            } else {
+                if (typeof userLocationMarker.geometry?.setCoordinates === 'function') {
+                    userLocationMarker.geometry.setCoordinates([smoothLat, smoothLon]);
                 }
-            );
-        } else {
-            const svgUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
-
-            let pulseLayout = null;
-            try {
-                pulseLayout = window.__userPulseLayout || (window.__userPulseLayout = ymaps.templateLayoutFactory.createClass('<div class="user-marker-wrap"><div class="user-pulse"></div></div>'));
-            } catch (e) {
-                pulseLayout = null;
+                if (typeof userLocationMarker.properties?.set === 'function') {
+                    userLocationMarker.properties.set('iconContent', iconContent);
+                }
             }
-
-            userLocationMarker = new ymaps.Placemark(userLocation,
-                {
-                    hintContent: 'Вы здесь',
-                    balloonContent: `📍 Ваше текущее местоположение<br>Скорость: ${speed} км/ч`
-                },
-                {
-                    iconLayout: 'default#imageWithContent',
-                    iconImageHref: svgUrl,
-                    iconImageSize: [size, size],
-                    iconImageOffset: [-(size/2), -(size/2)],
-                    iconContentLayout: pulseLayout || undefined,
-                    iconContentOffset: [-(size/2), -(size/2)],
-                    iconContentSize: [size, size],
-                    zIndex: 1000
-                }
-            );
-        }
-
-        myMap.geoObjects.add(userLocationMarker);
-
-        // Центрируем карту на текущем местоположении (если это первый раз)
-        if (!myMap.lastUserLocationUpdate) {
-            try { myMap.setCenter(userLocation, 17); } catch(e){}
-            myMap.lastUserLocationUpdate = true;
+            lastUserCoords = [smoothLat, smoothLon];
+        } catch (e) {
+            console.warn('Не удалось обновить маркер пользователя (ymaps2):', e?.message || e);
         }
     }
+
     
     // Центрирует карту на текущем местоположении и включает автоследование
     function centerOnMyLocation() {
@@ -6807,7 +7476,6 @@
         }
         autoFollow = true;
         updateFollowButton();
-        requestDynamicCourseOrientationPermission().catch(()=>{});
         try { monolithSetNavigationActive(autoFollow); } catch(e) {}
         try { updateDynamicCourseCamera(); } catch (e) {
             try { myMap.setCenter(userLocation, 17); } catch (e2) { console.warn(e2); }
@@ -6820,7 +7488,6 @@
         updateFollowButton();
         try { monolithSetNavigationActive(autoFollow); } catch(e) {}
         if (autoFollow && userLocation && myMap) {
-            requestDynamicCourseOrientationPermission().catch(()=>{});
             try { updateDynamicCourseCamera(); } catch(e) {
                 try { myMap.setCenter(userLocation, 17); } catch(e2) { console.warn(e2); }
             }
@@ -6828,7 +7495,20 @@
     }
 
     function updateFollowButton() {
+        try { updateTargetAutoVisibility(); } catch(e) {}
         const btn = document.getElementById('followToggleBtn');
+        const bottomBtn = document.getElementById('followBottomBtn');
+        const isYm3Active = String(activeMapEngine || '').includes('ymaps3') || String(mapAdapter?.mode || '').includes('ymaps3');
+
+        try { applyAutoFollowInterfaceMode(); } catch(e) {}
+
+        if (bottomBtn) {
+            bottomBtn.style.display = isYm3Active ? 'none' : 'flex';
+            bottomBtn.classList.toggle('active', !!autoFollow);
+            bottomBtn.title = autoFollow ? 'Автослежение: ВКЛ' : 'Автослежение: ВЫКЛ';
+            const iconEl = bottomBtn.querySelector('.locate-icon');
+            if (iconEl) iconEl.textContent = autoFollow ? '👁️' : '🚫';
+        }
         if (!btn) {
             try { updateLocateBtnUiState(); } catch(e) {}
             return;
@@ -6848,6 +7528,12 @@
         btn.innerHTML = `<span class="follow-icon">${icon}</span>${badge}`;
         try { monolithSetNavigationActive(autoFollow); } catch(e) {}
         try { updateLocateBtnUiState(); } catch(e) {}
+    }
+
+    function updateTargetAutoVisibility() {
+        const target = document.querySelector('.target');
+        if (!target) return;
+        target.classList.toggle('target-autofollow-hidden', !!autoFollow);
     }
 
     function updateLocateBtnUiState() {
@@ -6874,7 +7560,7 @@
             try { monolithStopKeepAliveAudio(); } catch (e) {}
             try { monolithReleaseWakeLock(); } catch (e) {}
         } else {
-            try { monolithPrimeAudioOnce(); } catch (e) {}
+            try { monolithPrimeAudioOnce(true); } catch (e) {}
             try { monolithSoftResumeSpeech(); } catch (e) {}
             try { monolithMaybeUpdateWakeLock(); } catch (e) {}
         }
@@ -7076,6 +7762,9 @@
 
         // Если токен есть — определяем админа по Telegram ID (и в Mini App, и в Web/PWA)
         isAdmin = !!uid && String(uid) === String(ADMIN_ID);
+        if (isAdmin) {
+            try { hideReleaseWaitScreen(); } catch (e) {}
+        }
 
         // Если пользователь уже в ЗБТ — гарантируем ачивку "Первопроходец"
         try {
@@ -11018,12 +11707,14 @@
             const t = document.getElementById('onlineCountText');
             if (t) t.textContent = `В сети: ${count}`;
             else badge.textContent = `В сети: ${count}`;
+            updateDrivingHudOnlineCount(`В сети: ${count}`);
             try { badge.classList.add('visible'); } catch(e) {}
         } catch (e) {
             console.warn('Ошибка loadOnlineCount:', e?.message || e);
             const t = document.getElementById('onlineCountText');
             if (t) t.textContent = 'В сети: ?';
             else badge.textContent = 'В сети: ?';
+            updateDrivingHudOnlineCount('В сети: ?');
             presenceSupported = false;
         }
     }
@@ -12222,6 +12913,7 @@
             try { updateFollowButton(); } catch(e) { /* ignore */ }
             // Загружаем маркеры с сервера
             loadMarkers();
+            try { monolithAnnounceStartupStatus(); } catch(e) {}
             // Fallback-поллинг на случай потери realtime
             setInterval(loadMarkersDebounced, 10000);
 
@@ -12263,6 +12955,7 @@
                 initGPS();
                 try { updateFollowButton(); } catch(e) { /* ignore */ }
                 loadMarkers();
+                try { monolithAnnounceStartupStatus(); } catch(e) {}
                 setInterval(loadMarkersDebounced, 10000);
                 
                 const openBtn = document.getElementById('openActionBtn');
@@ -12446,6 +13139,18 @@
             const parsed = Date.parse(m.exp);
             return !isNaN(parsed) ? parsed > now : true;
         });
+        drivingDpsCoordsCache = activeMarkers
+            .filter(m => String(m?.type) === 'dps' && String(m?.author_id || '') !== String(uid || ''))
+            .map(m => {
+                const c = extractMarkerCoordsForNotif(m);
+                if (!c) return null;
+                const lat = Number(c.lat);
+                const lon = Number(c.lon);
+                if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+                return [lat, lon];
+            })
+            .filter(Boolean);
+        refreshDrivingNearestDpsDistanceFromCache();
         
         // Подсчитываем метки по типам
         const typeCounts = {};
@@ -12458,7 +13163,14 @@
         
         // Используем GPS координаты пользователя, иначе центр карты
         const fallbackCenter = (mapAdapter && typeof mapAdapter.getCenter === 'function') ? mapAdapter.getCenter() : (myMap?.getCenter?.() || null);
-        const userCoords = (userLocation && userLocation.length >= 2) ? userLocation : fallbackCenter;
+        const hasLiveUserCoords = Array.isArray(userLocation) && userLocation.length >= 2;
+        const hasLastReliableUserCoords = Array.isArray(lastReliableUserLocation) && lastReliableUserLocation.length >= 2;
+        const userCoords = gpsReliable && hasLiveUserCoords
+            ? [Number(userLocation[0]), Number(userLocation[1])]
+            : (hasLastReliableUserCoords
+                ? [Number(lastReliableUserLocation[0]), Number(lastReliableUserLocation[1])]
+                : null);
+        const renderReferenceCoords = Array.isArray(userCoords) ? userCoords : fallbackCenter;
 
         // Для производительности рендерим только метки в видимой области (+запас)
         // или рядом с пользователем (чтобы голос/подсказки не терялись при смещении карты).
@@ -12483,8 +13195,8 @@
                 }
 
                 let nearUser = false;
-                if (Array.isArray(userCoords) && userCoords.length >= 2) {
-                    nearUser = calculateDistance(Number(userCoords[0]), Number(userCoords[1]), Number(coords.lat), Number(coords.lon)) <= NEARBY_RENDER_METERS;
+                if (Array.isArray(renderReferenceCoords) && renderReferenceCoords.length >= 2) {
+                    nearUser = calculateDistance(Number(renderReferenceCoords[0]), Number(renderReferenceCoords[1]), Number(coords.lat), Number(coords.lon)) <= NEARBY_RENDER_METERS;
                 }
 
                 return inBounds || nearUser;
@@ -12743,7 +13455,7 @@
             checkMarkerDistance(m, userCoords);
             
             // Очищаем уведомления для маркеров которые уже далеко (более 800м)
-            if (distanceNotifications.has(m.id)) {
+            if (distanceNotifications.has(m.id) && Array.isArray(userCoords) && userCoords.length >= 2) {
                 const mc = extractMarkerCoordsForNotif(m);
                 if (mc) {
                     const distance = calculateDistance(userCoords[0], userCoords[1], mc.lat, mc.lon);
@@ -13103,6 +13815,84 @@
         function hideSplashScreenImmediately() {
             document.getElementById('splashScreen').classList.add('hidden');
         }
+
+        let releaseWaitTimerId = null;
+        function getReleaseTargetDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const target = new Date(year, 2, 1, 12, 0, 0, 0); // 1 марта 12:00 (локальное время)
+            return target;
+        }
+
+        function formatReleaseCountdown(msLeft) {
+            const totalSeconds = Math.max(0, Math.floor(msLeft / 1000));
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const hh = String(hours).padStart(2, '0');
+            const mm = String(minutes).padStart(2, '0');
+            const ss = String(seconds).padStart(2, '0');
+            return `${days}д ${hh}:${mm}:${ss}`;
+        }
+
+        function hideReleaseWaitScreen() {
+            const gate = document.getElementById('releaseWaitScreen');
+            if (gate) gate.style.display = 'none';
+            if (releaseWaitTimerId) {
+                clearInterval(releaseWaitTimerId);
+                releaseWaitTimerId = null;
+            }
+        }
+
+        function shouldBypassReleaseWaitForAdmin() {
+            try {
+                if (isAdmin === true) return true;
+                const currentUid = String(uid || '').trim();
+                if (currentUid && currentUid === String(ADMIN_ID)) return true;
+                const tgUid = String(window.Telegram?.WebApp?.initDataUnsafe?.user?.id || '').trim();
+                if (tgUid && tgUid === String(ADMIN_ID)) return true;
+                const storedUid = String(localStorage.getItem('site_uid') || '').trim();
+                if (storedUid && storedUid === String(ADMIN_ID)) return true;
+            } catch (e) {}
+            return false;
+        }
+
+        function initReleaseWaitScreen() {
+            const gate = document.getElementById('releaseWaitScreen');
+            const countdown = document.getElementById('releaseCountdown');
+            if (!gate || !countdown) return;
+
+            if (shouldBypassReleaseWaitForAdmin()) {
+                hideReleaseWaitScreen();
+                return;
+            }
+
+            const target = getReleaseTargetDate();
+            const update = () => {
+                if (shouldBypassReleaseWaitForAdmin()) {
+                    hideReleaseWaitScreen();
+                    return;
+                }
+                const nowTs = Date.now();
+                const left = target.getTime() - nowTs;
+                if (left <= 0) {
+                    hideReleaseWaitScreen();
+                    return;
+                }
+                gate.style.display = 'flex';
+                countdown.textContent = formatReleaseCountdown(left);
+            };
+
+            update();
+            if (gate.style.display !== 'none') {
+                releaseWaitTimerId = setInterval(update, 1000);
+            }
+        }
+
+        setTimeout(() => {
+            try { initReleaseWaitScreen(); } catch (e) {}
+        }, 0);
 
         // ============= ПРОВЕРКА БАНА =============
         let userBanStatus = null;
